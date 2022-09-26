@@ -53,9 +53,9 @@
             url: '/kontrol-tahanan',
             data: formData,
         }).then(response => {
-            console.log(response);
+            windows.open('/kontrol-tahanan');
         }).catch(error => {
-            window.alert(formData.get('pasal'));
+            window.alert('Form kurang lengkap');
         });;
     }
 </script>
