@@ -35,6 +35,8 @@ class TahananController extends Controller
             'masuk' => Carbon::now(),
             'keluar' => Carbon::now(),
             'penyidik' => $req->penyidik,
+            'masuk' => $req->masuk,
+            'keluar' => $req->keluar,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ];

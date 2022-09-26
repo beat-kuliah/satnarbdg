@@ -53,9 +53,12 @@
             url: '/kontrol-tahanan',
             data: formData,
         }).then(response => {
-            windows.open('/kontrol-tahanan');
+            console.log('aman');
+            window.location.href = '/kontrol-tahanan';
         }).catch(error => {
             window.alert('Form kurang lengkap');
+            console.log('fail');
+            console.log(error);
         });;
     }
 </script>
