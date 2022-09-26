@@ -12,7 +12,11 @@ class TahananController extends Controller
 {
     public function index()
     {
-        $tahanan = DB::select('select tahanan.*,users.name as pname, DATEDIFF(tahanan.keluar, tahanan.masuk) as diff from tahanan join users on users.id = tahanan.penyidik');
+        $tahanan = DB::select('
+        select tahanan.*,users.name as pname, DATEDIFF(tahanan.keluar, now()) as diff 
+        from tahanan 
+        join users on users.id = tahanan.penyidik
+        where DATEDIFF(tahanan.keluar, tahanan.masuk) < 60');
         $penyidik = User::get()->where('penyidik', '!=', null);
 
         $data = [
@@ -25,6 +29,7 @@ class TahananController extends Controller
 
     public function store(Request $req)
     {
+        $keluar = date('Y-m-d', strtotime('+60 days', strtotime($req->masuk)));
         $data = [
             'nik' => $req->identitas,
             'tkp' => $req->tkp,
@@ -36,7 +41,7 @@ class TahananController extends Controller
             'keluar' => Carbon::now(),
             'penyidik' => $req->penyidik,
             'masuk' => $req->masuk,
-            'keluar' => $req->keluar,
+            'keluar' => $keluar,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ];

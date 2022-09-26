@@ -36,10 +36,6 @@
                         <input type="date" class="form-control" id="masuk" name="masuk">
                     </div>
                     <div class="mb-3">
-                        <label for="keluar" class="form-label">Tanggal Keluar</label>
-                        <input type="date" class="form-control" id="keluar" name="keluar">
-                    </div>
-                    <div class="mb-3">
                         <label for="penyidik" class="form-label">Alamat</label>
                         <select class="form-select" aria-label="Default select example" name="penyidik">
                             <option selected>Open this select menu</option>
