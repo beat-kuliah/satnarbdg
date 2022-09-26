@@ -12,11 +12,15 @@ class TahananController extends Controller
 {
     public function index()
     {
+        $cek = Tahanan::all()->count();
+
+        if($cek != 0){
         $tahanan = DB::select('
         select tahanan.*,users.name as pname, DATEDIFF(tahanan.keluar,'.Carbon::now().') as diff 
         from tahanan 
         join users on users.id = tahanan.penyidik
         where DATEDIFF(tahanan.keluar,'.Carbon::now().') < 60');
+        }
         $penyidik = User::get()->where('penyidik', '!=', null);
 
         $data = [
