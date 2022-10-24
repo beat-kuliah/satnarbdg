@@ -15,11 +15,11 @@ class TahananController extends Controller
         $cek = Tahanan::all()->count();
         $tahanan = [];
         if($cek != 0){
-        $tahanan = DB::select('
-        select tahanan.*,users.name as pname, DATEDIFF(tahanan.keluar, CURRENT_TIMESTAMP) as diff 
-        from tahanan 
-        join users on users.id = tahanan.penyidik
-        where DATEDIFF(tahanan.keluar, CURRENT_TIMESTAMP) < 60');
+            $tahanan = DB::select(
+                "select tahanan.*, users.name as pname, date_part('day', tahanan.keluar - NOW()) as diff from tahanan
+                join users on users.id = tahanan.penyidik
+                where date_part('day', tahanan.keluar - NOW()) <= 60"
+            );
         };
         $penyidik = User::get()->where('penyidik', '!=', null);
 
@@ -61,11 +61,11 @@ class TahananController extends Controller
         $cek = Tahanan::all()->count();
         $tahanan = [];
         if($cek != 0){
-        $tahanan = DB::select('
-        select tahanan.*,users.name as pname, DATEDIFF(tahanan.keluar, CURRENT_TIMESTAMP) as date_diff 
-        from tahanan 
-        join users on users.id = tahanan.penyidik
-        where DATEDIFF(tahanan.keluar, CURRENT_TIMESTAMP) < 60');
+            $tahanan = DB::select(
+                "select tahanan.*, date_part('day', tahanan.keluar - NOW()) as diff from tahanan
+                join users on users.id = tahanan.penyidik
+                where date_part('day', tahanan.keluar - NOW()) <= 60"
+            );
         };
 
         return response()->json($tahanan, 200);
