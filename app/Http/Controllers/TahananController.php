@@ -20,7 +20,7 @@ class TahananController extends Controller
         from tahanan 
         join users on users.id = tahanan.penyidik
         where DATEDIFF(tahanan.keluar,'.Carbon::now().') < 60');
-        }
+        };
         $penyidik = User::get()->where('penyidik', '!=', null);
 
         $data = [
@@ -54,5 +54,31 @@ class TahananController extends Controller
         DB::commit();
 
         return 'test';
+    }
+
+    public function getTahanan()
+    {
+        $cek = Tahanan::all()->count();
+        $tahanan = [];
+        if($cek != 0){
+        $tahanan = DB::select('
+        select tahanan.*,users.name as pname, DATEDIFF(tahanan.keluar, CURRENT_TIMESTAMP) as date_diff 
+        from tahanan 
+        join users on users.id = tahanan.penyidik
+        where DATEDIFF(tahanan.keluar, CURRENT_TIMESTAMP) < 60');
+        };
+
+        return response()->json($tahanan, 200);
+    }
+
+    public function getPenyidik()
+    {
+        $penyidik = DB::select(
+            'select *
+            from users
+            where penyidik is not null'
+        );
+
+        return response()->json($penyidik, 200);
     }
 }
