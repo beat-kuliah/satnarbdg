@@ -16,10 +16,10 @@ class TahananController extends Controller
         $tahanan = [];
         if($cek != 0){
         $tahanan = DB::select('
-        select tahanan.*,users.name as pname, DATEDIFF(tahanan.keluar,'.Carbon::now().') as diff 
+        select tahanan.*,users.name as pname, DATEDIFF(tahanan.keluar, CURRENT_TIMESTAMP) as diff 
         from tahanan 
         join users on users.id = tahanan.penyidik
-        where DATEDIFF(tahanan.keluar,'.Carbon::now().') < 60');
+        where DATEDIFF(tahanan.keluar, CURRENT_TIMESTAMP) < 60');
         };
         $penyidik = User::get()->where('penyidik', '!=', null);
 
