@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Tahanan extends Model
 {
@@ -12,6 +13,8 @@ class Tahanan extends Model
     protected $table = 'tahanan';
     
     protected $primaryKey = 'id';
+
+    protected $appends = ['diff'];
 
     protected $fillable = [
         'nik',
@@ -23,10 +26,24 @@ class Tahanan extends Model
         'foto',
         'masuk',
         'keluar',
-        'penyidik'
+        'penyidik',
     ];
 
     public function sidik(){
         return $this->belongsTo(User::class, 'penyidik', 'id');
     }
+
+    public function getDiffAttribute()
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $date1=date_create($this->keluar);
+        $date2=date_create(date('Y-m-d'));
+        $diff=date_diff($date2,$date1);
+        return 60 - $diff->d;
+    }
+
+    public function getPenyidikAttribute($value)
+    {
+        return User::find($value);
+    } 
 }
