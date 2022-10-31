@@ -84,8 +84,14 @@ class TahananController extends Controller
 
         DB::table('tahanan')->insert($data);
         DB::commit();
-        
-        return 'success';
+
+        $cek = Tahanan::all()->count();
+        $tahanan = [];
+        if($cek != 0){
+            $tahanan = Tahanan::all()->where('diff', '<=', 60);
+        };
+
+        return response()->json($tahanan, 200);
     }
 
     public function getPenyidik()
