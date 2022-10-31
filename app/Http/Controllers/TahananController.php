@@ -63,6 +63,31 @@ class TahananController extends Controller
         return response()->json($tahanan, 200);
     }
 
+    public function postTahanan(Request $req)
+    {
+        $keluar = date('Y-m-d', strtotime('+60 days', strtotime($req->date)));
+        $data = [
+            'nik' => $req->identitas,
+            'tkp' => $req->tkp,
+            'alamat' => $req->alamat,
+            'name' => $req->nama,
+            'umur' => $req->umur,
+            'pasal' => $req->pasal,
+            'masuk' => Carbon::now(),
+            'keluar' => Carbon::now(),
+            'penyidik' => 1,
+            'masuk' => $req->date,
+            'keluar' => $keluar,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ];
+
+        DB::table('tahanan')->insert($data);
+        DB::commit();
+        
+        return 'success';
+    }
+
     public function getPenyidik()
     {
         $penyidik = DB::select(

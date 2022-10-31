@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('name')->nullable();
             $table->string('role')->default(0);
             $table->string('password')->nullable();
-            $table->integer('penyidik')->default(0);
+            $table->integer('penyidik')->nullable();
             $table->string('telp')->nullable();
             $table->string('pangkat')->nullable();
             $table->timestamps();

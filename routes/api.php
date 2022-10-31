@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/tahanan', [TahananController::class, 'getTahanan']);
 Route::get('/penyidik', [TahananController::class, 'getPenyidik']);
+Route::post('/tahanan', [TahananController::class, 'postTahanan']);
