@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\BuktiController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\LampiranController;
+use App\Http\Controllers\RencanaController;
 use App\Http\Controllers\TahananController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,5 +26,24 @@ Route::get('/', function () {return redirect('/login');});
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/kontrol-tahanan', [TahananController::class, 'index']);
-Route::post('/kontrol-tahanan', [TahananController::class, 'store']);
+Route::get('/perkara', [TahananController::class, 'index']);
+Route::post('/perkara', [TahananController::class, 'store']);
+
+Route::get('/anggota', [UserController::class, 'penyidik']);
+
+Route::get('/rencana', [RencanaController::class, 'index']);
+Route::post('/rencana', [RencanaController::class, 'store']);
+Route::get('/rencana/{id}', [RencanaController::class, 'edit']);
+Route::post('/rencana', [RencanaController::class, 'update']);
+
+Route::get('/inventaris', [InventarisController::class, 'index']);
+
+Route::get('/lampiran', [LampiranController::class, 'index']);
+Route::post('/lampiran', [LampiranController::class, 'store']);
+Route::get('/lampiran/{id}', [LampiranController::class, 'edit']);
+Route::post('/lampiran', [LampiranController::class, 'update']);
+Route::get('/lampiran/{id}/destroy', [LampiranController::class, 'destroy']);
+
+Route::get('/bukti', [BuktiController::class, 'index']);
+
+Route::get('/{path}/{filename}', [Controller::class, 'getFoto']);

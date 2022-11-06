@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Tambah tahanan</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Tambah Rencana Kegiatan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -36,13 +36,17 @@
                         <input type="date" class="form-control" id="masuk" name="masuk">
                     </div>
                     <div class="mb-3">
-                        <label for="penyidik" class="form-label">Alamat</label>
+                        <label for="penyidik" class="form-label">Penyidik</label>
                         <select class="form-select" aria-label="Default select example" name="penyidik">
                             <option selected>Open this select menu</option>
-                            @foreach ($penyidik as $p)
-                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                            @foreach ($anggota as $a)
+                            <option value="{{ $a->id }}">{{ $a->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Foto</label>
+                        <input class="form-control" type="file" name="foto" id="foto">
                     </div>
                 </form>
             </div>

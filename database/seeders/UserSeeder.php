@@ -154,5 +154,12 @@ class UserSeeder extends Seeder
             'name' => 'WAHONO',
             'penyidik' => 1
         ]);
+
+        DB::table('users')->insert([
+            'username' => 'admin',
+            'name' => 'admin',
+            'role' => 1,
+            'password' => Hash::make('admin'),
+        ]);
     }
 }

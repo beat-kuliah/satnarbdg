@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class Tahanan extends Model
 {
@@ -14,7 +15,9 @@ class Tahanan extends Model
     
     protected $primaryKey = 'id';
 
-    protected $appends = ['diff'];
+    protected $appends = [
+        'diff',
+    ];
 
     protected $fillable = [
         'nik',
@@ -38,12 +41,12 @@ class Tahanan extends Model
         date_default_timezone_set('Asia/Jakarta');
         $date1=date_create($this->keluar);
         $date2=date_create(date('Y-m-d'));
-        $diff=date_diff($date2,$date1);
-        return 60 - $diff->d;
+        $diff=date_diff($date1,$date2);
+        return $diff->format("%a");
     }
 
     public function getPenyidikAttribute($value)
     {
         return User::find($value);
-    } 
+    }
 }

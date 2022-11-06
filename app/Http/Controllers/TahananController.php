@@ -6,7 +6,8 @@ use App\Models\Tahanan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TahananController extends Controller
 {
@@ -14,7 +15,7 @@ class TahananController extends Controller
     {
         $cek = Tahanan::all()->count();
         $tahanan = [];
-        if($cek != 0){
+        if ($cek != 0) {
             $tahanan = Tahanan::all()->where('diff', '<=', 60);
         };
         $penyidik = User::get()->where('penyidik', '!=', null);
@@ -24,11 +25,14 @@ class TahananController extends Controller
             'penyidik' => $penyidik
         ];
 
-        return view('kontrol_tahanan.index', $data);
+        return view('perkara_ditangani.index', $data);
     }
 
     public function store(Request $req)
     {
+        $foto = $req->file('foto');
+        $path_foto = Storage::put('tahanan', $foto);
+
         $keluar = date('Y-m-d', strtotime('+60 days', strtotime($req->masuk)));
         $data = [
             'nik' => $req->identitas,
@@ -42,21 +46,24 @@ class TahananController extends Controller
             'penyidik' => $req->penyidik,
             'masuk' => $req->masuk,
             'keluar' => $keluar,
+            'foto' => $path_foto,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ];
 
+        // Storage::put('', $req->foto);
+
         DB::table('tahanan')->insert($data);
         DB::commit();
 
-        return 'test';
+        return 'success';
     }
 
     public function getTahanan()
     {
         $cek = Tahanan::all()->count();
         $tahanan = [];
-        if($cek != 0){
+        if ($cek != 0) {
             $tahanan = Tahanan::all()->where('diff', '<=', 60);
         };
 
@@ -87,7 +94,7 @@ class TahananController extends Controller
 
         $cek = Tahanan::all()->count();
         $tahanan = [];
-        if($cek != 0){
+        if ($cek != 0) {
             $tahanan = Tahanan::all()->where('diff', '<=', 60);
         };
 
