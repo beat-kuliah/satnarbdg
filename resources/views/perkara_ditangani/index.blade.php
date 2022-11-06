@@ -68,7 +68,26 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                {{ $tahan->name }}
+                <div class="row">
+                    <div class="col-md-3">NIK</div>
+                    <div class="col-md-9">: {{ $tahan->nik }}</div>
+                    <div class="col-md-3">Nama</div>
+                    <div class="col-md-9">: {{ $tahan->name }}</div>
+                    <div class="col-md-3">Umur</div>
+                    <div class="col-md-9">: {{ $tahan->umur }}</div>
+                    <div class="col-md-3">Alamat</div>
+                    <div class="col-md-9">: {{ $tahan->alamat }}</div>
+                    <div class="col-md-3">TKP</div>
+                    <div class="col-md-9">: {{ $tahan->tkp }}</div>
+                    <div class="col-md-3">Pasal</div>
+                    <div class="col-md-9">: {{ $tahan->pasal }}</div>
+                    <div class="col-md-3">Masuk</div>
+                    <div class="col-md-9">: {{ $tahan->masuk }}</div>
+                    <div class="col-md-3">Keluar</div>
+                    <div class="col-md-9">: {{ $tahan->keluar }}</div>
+                    <div class="col-md-3">Penyidik</div>
+                    <div class="col-md-9">: {{ $tahan->penyidik->name }}</div>
+                </div>
             </div>
         </div>
     </div>
