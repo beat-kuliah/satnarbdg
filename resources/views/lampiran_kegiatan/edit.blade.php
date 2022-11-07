@@ -8,7 +8,7 @@
             <input type="hidden" name="id" value="{{ $lampiran->id }}">
             <div class="mb-3">
                 <label for="hasil" class="form-label">Hasil Kegiatan</label>
-                <input type="text" class="form-control" id="hasil" name="hasil" value="{{ $lampiran->hasil_kegiatan }}">
+                        <textarea class="form-control" placeholder="Hasil Kegiatan" id="floatingTextarea2" style="height: 100px" name="hasil">{{ $lampiran->hasil_kegiatan }}</textarea>
             </div>
             <div class="mb-3">
                 <label for="foto" class="form-label">Foto Kegiatan</label>
@@ -41,7 +41,7 @@
 
         axios({
             method: 'post',
-            url: '/lampiran',
+            url: '/lampiran/update',
             data: formData,
             headers: {
                 'Content-Type': 'multipart/form-data'

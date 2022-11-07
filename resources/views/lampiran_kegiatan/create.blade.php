@@ -9,7 +9,7 @@
                 <form id="form1" class="form">
                     <div class="mb-3">
                         <label for="hasil" class="form-label">Hasil Kegiatan</label>
-                        <input type="text" class="form-control" id="hasil" name="hasil">
+                        <textarea class="form-control" placeholder="Hasil Kegiatan" id="floatingTextarea2" style="height: 100px" name="hasil"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="foto" class="form-label">Foto Kegiatan</label>

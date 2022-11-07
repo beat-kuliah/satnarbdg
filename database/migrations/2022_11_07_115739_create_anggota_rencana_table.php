@@ -3,9 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Ramsey\Uuid\Type\Integer;
 
-class CreateRencanaTable extends Migration
+class CreateAnggotaRencanaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +13,10 @@ class CreateRencanaTable extends Migration
      */
     public function up()
     {
-        Schema::create('rencana', function (Blueprint $table) {
+        Schema::create('anggota_rencana', function (Blueprint $table) {
             $table->id();
-            $table->text('name')->nullable();
-            $table->integer('jenis')->nullable();
+            $table->integer('rencana_id');
+            $table->integer('anggota_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateRencanaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rencana');
+        Schema::dropIfExists('anggota_rencana');
     }
 }

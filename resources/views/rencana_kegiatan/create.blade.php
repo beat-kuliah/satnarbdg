@@ -9,7 +9,7 @@
                 <form id="form" class="form">
                     <div class="mb-3">
                         <label for="surat" class="form-label">Surat Tugas</label>
-                        <input type="file" class="form-control" id="surat" name="surat">
+                        <input type="file" class="form-control" id="surat" name="surat[]" multiple>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Kegiatan</label>
@@ -18,28 +18,23 @@
                     <div class="mb-3">
                         <label for="pasal" class="form-label">Jenis</label>
                         <div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="jenis" id="jenis1" value="1">
-                            <label class="form-check-label" for="jenis1">Khusus</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="jenis" id="jenis2" value="0">
-                            <label class="form-check-label" for="jenis2">Biasa</label>
-                        </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="jenis" id="jenis1" value="1">
+                                <label class="form-check-label" for="jenis1">Khusus</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="jenis" id="jenis2" value="0">
+                                <label class="form-check-label" for="jenis2">Biasa</label>
+                            </div>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="penyidik" class="form-label">Anggota</label>
-                        <select class="form-select" aria-label="Default select example" name="anggota">
-                            <option selected>Open this select menu</option>
+                        <label for="penyidik" class="form-label">Anggota</label><br>
+                        <select id="anggota" class="form-select" name="anggota[]" multiple="multiple">
                             @foreach ($anggota as $a)
                             <option value="{{ $a->id }}">{{ $a->name }}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="foto" class="form-label">Foto</label>
-                        <input class="form-control" type="file" name="foto" id="foto">
                     </div>
                 </form>
             </div>

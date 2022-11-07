@@ -28,7 +28,11 @@
             <tr>
                 <td>{{ $r->id }}</td>
                 <td>{{ $r->name }}</td>
-                <td>{{ $r->anggota->name }}</td>
+                <td>
+                    @foreach ($r->anggota as $ra)
+                        {{ $ra->anggota->name }}<br>
+                    @endforeach
+                </td>
                 <td>{{ $r->jenis }}</td>
                 <td>
                     <a class="btn btn-primary" href="/rencana/{{ $r->id }}">Edit</a>
@@ -56,13 +60,22 @@
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => {
-            console.log(response);
-            // window.location.href = '/perkara';
+            if (response.data == 'success') {
+                window.location.href = '/rencana';
+            } else {
+                window.alert('Form kurang lengkap');
+            }
         }).catch(error => {
             window.alert('Form kurang lengkap');
             console.log('fail');
             console.log(error);
         });;
     }
+
+    $("#anggota").select2({
+        dropdownParent: $('#create'),
+        placeholder: "Silahkan Pilih Anggota",
+        allowClear: true
+    });
 </script>
 @endsection

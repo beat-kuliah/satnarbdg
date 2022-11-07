@@ -14,10 +14,13 @@ class Rencana extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'surat_tugas',
         'name',
         'jenis',
-        'anggota'
+    ];
+
+    protected $appends = [
+        'surat',
+        'anggota',
     ];
 
     public function getJenisAttribute($value)
@@ -27,8 +30,13 @@ class Rencana extends Model
         return $result;
     }
 
-    public function getAnggotaAttribute($value)
+    public function getAnggotaAttribute()
     {
-        return User::find($value);
+        return AnggotaRencana::where('rencana_id', '=', $this->id)->get();
+    }
+
+    public function getSuratAttribute()
+    {
+        return SuratTugas::where('rencana_id', '=', $this->id)->get();
     }
 }

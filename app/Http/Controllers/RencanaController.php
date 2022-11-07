@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AnggotaRencana;
 use App\Models\Rencana;
+use App\Models\SuratTugas;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Failed;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,28 +29,40 @@ class RencanaController extends Controller
 
     public function store(Request $req)
     {
-        $foto = $req->file('foto');
-        $name_foto = Carbon::now()->format('YmdHisu') . '_' . $foto->getClientOriginalName();
-        $path_foto = Storage::put('images', $foto);
-
         $file = $req->file('surat');
-        $name_file = Carbon::now()->format('YmdHisu') . '_' . $file->getClientOriginalName();
-        $path_file = Storage::put('surat', $file);
+        $anggota = $req->anggota;
 
-        $data = [
-            'surat_tugas' => $path_file,
-            'name' => $req->name,
-            'jenis' => $req->jenis,
-            'anggota' => $req->anggota,
-            'foto' => $path_foto,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ];
+        if (count($file) > 0 && count($anggota) > 0) {
+            $data = [
+                'name' => $req->name,
+                'jenis' => $req->jenis,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
 
-        DB::table('rencana')->insert($data);
-        DB::commit();
+            $id = DB::table('rencana')->insertGetId($data);
 
-        return 'success';
+            foreach ($anggota as $a) {
+                DB::table('anggota_rencana')->insert([
+                    'rencana_id' => $id,
+                    'anggota_id' => $a
+                ]);
+            }
+
+            foreach ($file as $f) {
+                $path_file = Storage::put('surat', $f);
+                DB::table('surat_tugas')->insert([
+                    'rencana_id' => $id,
+                    'surat' => $path_file
+                ]);
+            }
+
+            DB::commit();
+
+            return $anggota;
+        } else {
+            return 'fail';
+        }
     }
 
     public function edit($id)
@@ -67,8 +82,16 @@ class RencanaController extends Controller
     {
         $rencana = DB::table('rencana')->where('id', $req->id);
 
-        if ($req->surat != null)
-            $rencana->update(['surat_tugas' => true]);
+        if ($req->file('surat') != '') {
+            SuratTugas::where('rencana_id', '=', $req->id)->delete();
+            foreach($req->surat as $rs){
+                $path_file = Storage::put('surat', $rs);
+                DB::table('surat_tugas')->insert([
+                    'rencana_id' => $req->id,
+                    'surat' => $path_file
+                ]);
+            }
+        }
 
         if ($req->name != null)
             $rencana->update(['name' => $req->name]);
@@ -76,11 +99,15 @@ class RencanaController extends Controller
         if ($req->jenis != null)
             $rencana->update(['jenis' => $req->jenis]);
 
-        if ($req->anggota != null)
-            $rencana->update(['anggota' => $req->anggota]);
-
-        if ($req->foto != null)
-            $rencana->update(['foto' => true]);
+        if (count($req->anggota) > 0) {
+            AnggotaRencana::where('rencana_id', '=', $req->id)->delete();
+            foreach ($req->anggota as $ra) {
+                DB::table('anggota_rencana')->insert([
+                    'rencana_id' => $req->id,
+                    'anggota_id' => $ra
+                ]);
+            }
+        }
 
         return 'success';
     }

@@ -34,16 +34,23 @@ Route::get('/anggota', [UserController::class, 'penyidik']);
 Route::get('/rencana', [RencanaController::class, 'index']);
 Route::post('/rencana', [RencanaController::class, 'store']);
 Route::get('/rencana/{id}', [RencanaController::class, 'edit']);
-Route::post('/rencana', [RencanaController::class, 'update']);
+Route::post('/rencana/update', [RencanaController::class, 'update']);
 
 Route::get('/inventaris', [InventarisController::class, 'index']);
+Route::post('/inventaris', [InventarisController::class, 'store']);
+Route::get('/inventaris/{id}', [InventarisController::class, 'edit']);
+Route::post('/inventaris/update', [InventarisController::class, 'update']);
+
 
 Route::get('/lampiran', [LampiranController::class, 'index']);
 Route::post('/lampiran', [LampiranController::class, 'store']);
 Route::get('/lampiran/{id}', [LampiranController::class, 'edit']);
-Route::post('/lampiran', [LampiranController::class, 'update']);
+Route::post('/lampiran/update', [LampiranController::class, 'update']);
 Route::get('/lampiran/{id}/destroy', [LampiranController::class, 'destroy']);
 
 Route::get('/bukti', [BuktiController::class, 'index']);
+Route::post('/bukti', [BuktiController::class, 'store']);
+Route::get('/bukti/{id}', [BuktiController::class, 'edit']);
+Route::post('/bukti/update', [BuktiController::class, 'update']);
 
 Route::get('/{path}/{filename}', [Controller::class, 'getFoto']);

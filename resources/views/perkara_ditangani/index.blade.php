@@ -111,8 +111,7 @@
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => {
-            console.log(response);
-            // window.location.href = '/perkara';
+            window.location.href = '/perkara';
         }).catch(error => {
             window.alert('Form kurang lengkap');
             console.log('fail');
