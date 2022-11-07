@@ -15,14 +15,21 @@ class Lampiran extends Model
 
     protected $appends = [
         'foto',
+        'rencana',
     ];
 
     protected $fillable = [
+        'rencana_id',
         'hasil_kegiatan',
     ];
 
     public function getFotoAttribute()
     {
         return FotoLampiran::where('lampiran_id', '=', $this->id)->get();
+    }
+
+    public function getRencanaAttribute()
+    {
+        return Rencana::find($this->rencana_id);
     }
 }

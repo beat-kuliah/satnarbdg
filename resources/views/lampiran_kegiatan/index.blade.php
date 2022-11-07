@@ -18,6 +18,7 @@
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Nama Kegiatan</th>
+                <th scope="col">Hasil Kegiatan</th>
                 <th scope="col">Aksi</th>
             </tr>
         </thead>
@@ -25,6 +26,7 @@
             @foreach ($lampiran as $l)
                 <tr>
                     <td>{{ $l->id }}</td>
+                    <td>{{ $l->rencana->name }}</td>
                     <td>{{ $l->hasil_kegiatan }}</td>
                     <td>
                         <a class="btn btn-primary" href="/lampiran/{{ $l->id }}">Tambah Foto</a>
