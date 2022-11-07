@@ -7,8 +7,16 @@
         <form id="form" class="form">
             <input type="hidden" name="id" value="{{ $lampiran->id }}">
             <div class="mb-3">
+                <label for="nama" class="form-label">Nama Kegiatan</label>
+                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="name">
+                    @foreach ($rencana as $r)
+                    <option {{ $lampiran->rencana_id == $r->id ? 'selected' : '' }} value="{{ $r->id }}">{{ $r->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="hasil" class="form-label">Hasil Kegiatan</label>
-                        <textarea class="form-control" placeholder="Hasil Kegiatan" id="floatingTextarea2" style="height: 100px" name="hasil">{{ $lampiran->hasil_kegiatan }}</textarea>
+                <textarea class="form-control" placeholder="Hasil Kegiatan" id="floatingTextarea2" style="height: 100px" name="hasil">{{ $lampiran->hasil_kegiatan }}</textarea>
             </div>
             <div class="mb-3">
                 <label for="foto" class="form-label">Foto Kegiatan</label>

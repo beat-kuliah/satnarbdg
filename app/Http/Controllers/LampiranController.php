@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FotoLampiran;
 use App\Models\Lampiran;
+use App\Models\Rencana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -14,9 +15,11 @@ class LampiranController extends Controller
     public function index()
     {
         $lampiran = Lampiran::all();
+        $rencana = Rencana::all();
 
         $data = [
             'lampiran' => $lampiran,
+            'rencana' => $rencana,
         ];
 
         return view('lampiran_kegiatan.index', $data);
@@ -25,6 +28,7 @@ class LampiranController extends Controller
     public function store(Request $req)
     {
         $data = [
+            'rencana_id' => $req->name,
             'hasil_kegiatan' => $req->hasil,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
@@ -52,9 +56,11 @@ class LampiranController extends Controller
     public function edit($id)
     {
         $lampiran = Lampiran::find($id);
+        $rencana = Rencana::all();
 
         $data = [
             'lampiran' => $lampiran,
+            'rencana' => $rencana,
         ];
 
         return view('lampiran_kegiatan.edit', $data);
@@ -63,18 +69,26 @@ class LampiranController extends Controller
     public function update(Request $req)
     {
         $id = $req->id;
-
+        $lampiran = DB::table('lampiran')->where('id', $req->id);
         $foto = $req->file('foto');
 
-        foreach ($foto as $f){
-            $path_foto = Storage::put('tahanan', $f);
+        if($req->name != null)
+            $lampiran->update(['rencana_id' => $req->name]);
 
-            DB::table('foto_lampiran')->insert([
-                'lampiran_id' => $id,
-                'foto' => $path_foto,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
+        if($req->hasil != null)
+            $lampiran->update(['hasil_kegiatan' => $req->hasil]);
+
+        if($foto != ''){
+            foreach ($foto as $f){
+                $path_foto = Storage::put('tahanan', $f);
+    
+                DB::table('foto_lampiran')->insert([
+                    'lampiran_id' => $id,
+                    'foto' => $path_foto,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            }
         }
         DB::commit();
 

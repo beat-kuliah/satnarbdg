@@ -15,6 +15,7 @@ class CreateLampiranTable extends Migration
     {
         Schema::create('lampiran', function (Blueprint $table) {
             $table->id();
+            $table->integer('rencana_id')->nullable();
             $table->text('hasil_kegiatan')->nullable();
             $table->timestamps();
         });

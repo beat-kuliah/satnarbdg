@@ -32,7 +32,7 @@ class RencanaController extends Controller
         $file = $req->file('surat');
         $anggota = $req->anggota;
 
-        if (count($file) > 0 && count($anggota) > 0) {
+        if ($file != '' && count($anggota) > 0) {
             $data = [
                 'name' => $req->name,
                 'jenis' => $req->jenis,
@@ -59,7 +59,7 @@ class RencanaController extends Controller
 
             DB::commit();
 
-            return $anggota;
+            return 'success';
         } else {
             return 'fail';
         }

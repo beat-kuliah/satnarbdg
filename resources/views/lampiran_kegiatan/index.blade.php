@@ -6,7 +6,7 @@
 
     </div>
     <div class="col-md-4">
-        <h3 class="text-center">Rencana Kegiatan</h3>
+        <h3 class="text-center">Lampiran Kegiatan</h3>
     </div>
     <div class="col-md-4 text-center">
         <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#create">Tambah rencana kegiatan</button>

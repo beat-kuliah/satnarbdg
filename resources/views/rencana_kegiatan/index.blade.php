@@ -60,6 +60,7 @@
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => {
+                console.log(response);
             if (response.data == 'success') {
                 window.location.href = '/rencana';
             } else {
